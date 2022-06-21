@@ -24,47 +24,7 @@ const customTheme = createTheme({
       'Arial',
       'sans-serif'
     ].join(','),
-    fontStyle: 'normal',
-    h1: {
-      fontSize: '34px',
-      fontWeight: 'normal',
-      color: '#4a4a4a',
-      [theme.breakpoints.down('sm')]: {
-        fontSize: '30px'
-      }
-    },
-    h2: {
-      fontSize: '35px',
-      fontWeight: 'bold',
-      color: '#4a4a4a',
-      [theme.breakpoints.down('sm')]: {
-        fontSize: '31px'
-      }
-    },
-    h3: {
-      fontSize: '30px',
-      fontWeight: 'normal',
-      color: '#4a4a4a',
-      [theme.breakpoints.down('sm')]: {
-        fontSize: '26px'
-      }
-    },
-    h4: {
-      fontSize: '32px',
-      fontWeight: 'normal',
-      color: '#4a4a4a',
-      [theme.breakpoints.down('sm')]: {
-        fontSize: '28px'
-      }
-    },
-    body1: {
-      fontSize: '20px',
-      fontWeight: 'lighter',
-      color: '#4a4a4a',
-      [theme.breakpoints.down('sm')]: {
-        fontSize: '16px'
-      }
-    }
+    fontStyle: 'normal'
   }
 })
 

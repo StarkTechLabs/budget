@@ -2,13 +2,11 @@ import React, { useState } from 'react'
 
 import { DataGrid } from '@mui/x-data-grid'
 
-import { useTheme } from '@mui/material/styles'
-import useMediaQuery from '@mui/material/useMediaQuery'
+import useMobile from '../../hooks/useMobile/useMobile'
 
 const TransactionTable = ({ transactions, defaultPageSize = 5 }) => {
+  const { isMobile } = useMobile()
   const [pageSize, setPageSize] = useState(defaultPageSize)
-  const theme = useTheme()
-  const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
   const columns = [
     {
       field: 'transactionDate',
@@ -67,11 +65,14 @@ const TransactionTable = ({ transactions, defaultPageSize = 5 }) => {
         columns: {
           columnVisibilityModel: {
             // hide columns at first
+            transactionDate: true,
             clearingDate: false,
             description: false,
-            purchaseBy: false,
+            merchant: true,
+            category: !isMobile,
             type: !isMobile,
-            category: !isMobile
+            purchaseBy: false,
+            amount: true
           }
         }
       }}
