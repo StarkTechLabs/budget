@@ -7,6 +7,7 @@ import theme from './common/theme'
 
 import Header from './components/Header'
 import Layout from './components/Layout'
+import BusProvider from './components/BusProvider/BusProvider'
 import AppProvider from './components/AppProvider/AppProvider'
 
 import Home from './views/Home'
@@ -15,23 +16,25 @@ import Analyze from './views/Analyze'
 const AppContainer = () => (
   <ThemeProvider theme={theme}>
     <CssBaseline />
-    <AppProvider>
-      <Router>
-        <Header />
-        <Layout>
-          <Routes>
-            <Route
-              path='/analyze'
-              element={<Analyze />}
-            />
-            <Route
-              path='/' exact
-              element={<Home />}
-            />
-          </Routes>
-        </Layout>
-      </Router>
-    </AppProvider>
+    <BusProvider>
+      <AppProvider>
+        <Router>
+          <Header />
+          <Layout>
+            <Routes>
+              <Route
+                path='/analyze'
+                element={<Analyze />}
+              />
+              <Route
+                path='/' exact
+                element={<Home />}
+              />
+            </Routes>
+          </Layout>
+        </Router>
+      </AppProvider>
+    </BusProvider>
   </ThemeProvider>
 )
 
