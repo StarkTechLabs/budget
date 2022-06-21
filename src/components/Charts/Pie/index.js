@@ -1,7 +1,10 @@
 import React from 'react'
 import { ResponsivePie } from '@nivo/pie'
 
+import useMobile from '../../../hooks/useMobile/useMobile'
+
 const Pie = ({ data, width = '100%', height = '400px' }) => {
+  const { isMobile } = useMobile()
   return (
     <div style={{ width, height }}>
       <ResponsivePie
@@ -37,14 +40,14 @@ const Pie = ({ data, width = '100%', height = '400px' }) => {
         }}
         defs={[]}
         fill={[]}
-        legends={[
+        legends={!isMobile && [
           {
-            anchor: 'bottom',
-            direction: 'row',
+            anchor: isMobile ? 'bottom' : 'left',
+            direction: isMobile ? 'row' : 'column',
             justify: false,
             translateX: 0,
             translateY: 56,
-            itemsSpacing: 0,
+            itemsSpacing: isMobile ? 0 : 1,
             itemWidth: 100,
             itemHeight: 18,
             itemTextColor: '#999',

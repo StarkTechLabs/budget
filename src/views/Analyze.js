@@ -25,7 +25,7 @@ const Analyze = () => {
 
   const handleCopy = val => {
     navigator.clipboard && navigator.clipboard.writeText(val)
-    bus.emit('show-notification', { content: 'Copied!' })
+    bus.emit('show-notification', { content: 'Copied value!' })
   }
   const handleCopyFunc = val => () => handleCopy(val)
 
