@@ -24,6 +24,23 @@ export const formatCount = count => {
   return '0'
 }
 
+export const formatCurrency = val => {
+  const formatter = new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'USD'
+
+    // These options are needed to round to whole numbers if that's what you want.
+    // minimumFractionDigits: 0, // (this suffices for whole numbers, but will print 2500.10 as $2,500.1)
+    // maximumFractionDigits: 0, // (causes 2500.99 to be printed as $2,501)
+  })
+
+  return formatter.format(+val)
+}
+
+export const generateId = (prefix = 'id-') => {
+  return prefix + round(Math.random() * 100)
+}
+
 export const group = (data, key = 'category', valKey = 'amount') => {
   const aggregate = {}
   data.forEach(transaction => {
@@ -41,4 +58,12 @@ export const group = (data, key = 'category', valKey = 'amount') => {
     })
   }
   return chartData
+}
+
+export const sum = data => {
+  let total = 0
+  for (const item of data) {
+    total += (+item.amount)
+  }
+  return round(total)
 }

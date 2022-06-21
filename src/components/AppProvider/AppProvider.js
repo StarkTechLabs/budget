@@ -1,5 +1,7 @@
 /* global localStorage */
-import React, { createContext, useState } from 'react'
+import React, { createContext, useState, useEffect } from 'react'
+
+import { processFilters } from '../../common/filter'
 
 export const AppContext = createContext(null)
 
@@ -21,6 +23,7 @@ const storageKeys = {
 
 const AppProvider = ({ children }) => {
   const [settings, setSettings] = useState()
+  const [data, setData] = useState([])
   const [transactions, setTransactions] = useState(parseLocalItem(storageKeys.transaction, []))
   const [budget, setBudget] = useState(parseLocalItem(storageKeys.budget, {}))
   const [filters, setFilters] = useState(parseLocalItem(storageKeys.filters, {}))
@@ -46,10 +49,22 @@ const AppProvider = ({ children }) => {
     localStorage.setItem(storageKeys.transforms, JSON.stringify(data))
   }
 
+  const process = () => {
+    const results = transactions.filter(processFilters(filters))
+    setData(results)
+  }
+
+  useEffect(() => {
+    if (transactions) {
+      process()
+    }
+  }, [filters, transactions, transforms])
+
   return (
     <AppContext.Provider value={{
       settings,
       setSettings,
+      data,
       transactions,
       setTransactions: handleTransactions,
       budget,
