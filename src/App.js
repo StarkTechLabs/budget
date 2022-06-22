@@ -11,7 +11,6 @@ import BusProvider from './components/BusProvider/BusProvider'
 import AppProvider from './components/AppProvider/AppProvider'
 
 import Home from './views/Home'
-import Analyze from './views/Analyze'
 
 const AppContainer = () => (
   <ThemeProvider theme={theme}>
@@ -22,10 +21,6 @@ const AppContainer = () => (
           <Header />
           <Layout>
             <Routes>
-              <Route
-                path='/analyze'
-                element={<Analyze />}
-              />
               <Route
                 path='/' exact
                 element={<Home />}

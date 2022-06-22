@@ -2,6 +2,22 @@ import React from 'react'
 import { ResponsivePie } from '@nivo/pie'
 
 import useMobile from '../../../hooks/useMobile/useMobile'
+import { formatCurrency } from '../../../common/utils'
+
+const theme = {
+  tooltip: {
+    container: {
+      background: '#121212',
+      color: '#fff',
+      fontSize: 12
+    },
+    basic: {},
+    chip: {},
+    table: {},
+    tableCell: {},
+    tableCellValue: {}
+  }
+}
 
 const Pie = ({ data, width = '100%', height = '400px' }) => {
   const { isMobile } = useMobile()
@@ -9,6 +25,8 @@ const Pie = ({ data, width = '100%', height = '400px' }) => {
     <div style={{ width, height }}>
       <ResponsivePie
         data={data}
+        theme={theme}
+        valueFormat={num => formatCurrency(num)}
         margin={{ top: 40, right: 80, bottom: 80, left: 80 }}
         innerRadius={0.5}
         padAngle={0.7}
@@ -25,7 +43,7 @@ const Pie = ({ data, width = '100%', height = '400px' }) => {
           ]
         }}
         arcLinkLabelsSkipAngle={10}
-        arcLinkLabelsTextColor='#333333'
+        arcLinkLabelsTextColor='#ddd'
         arcLinkLabelsThickness={2}
         arcLinkLabelsColor={{ from: 'color' }}
         arcLabelsSkipAngle={10}
@@ -38,8 +56,6 @@ const Pie = ({ data, width = '100%', height = '400px' }) => {
             ]
           ]
         }}
-        defs={[]}
-        fill={[]}
         legends={!isMobile && [
           {
             anchor: isMobile ? 'bottom' : 'left',
@@ -50,7 +66,7 @@ const Pie = ({ data, width = '100%', height = '400px' }) => {
             itemsSpacing: isMobile ? 0 : 1,
             itemWidth: 100,
             itemHeight: 18,
-            itemTextColor: '#999',
+            itemTextColor: '#ddd',
             itemDirection: 'left-to-right',
             itemOpacity: 1,
             symbolSize: 18,
@@ -59,7 +75,7 @@ const Pie = ({ data, width = '100%', height = '400px' }) => {
               {
                 on: 'hover',
                 style: {
-                  itemTextColor: '#000'
+                  itemTextColor: '#fff'
                 }
               }
             ]

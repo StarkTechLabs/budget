@@ -13,14 +13,13 @@ import strings from '../common/strings'
 
 const useStyles = makeStyles(theme => ({
   grow: {
-    flexGrow: 1,
-    borderBottom: '1px solid lightgrey'
+    flexGrow: 1
   },
   title: {
     flexGrow: 1,
     margin: theme.spacing(0, 1),
     cursor: 'pointer',
-    color: '#eeeeee',
+    color: '#fff',
     textDecoration: 'none'
   },
   iconWrapper: {
@@ -39,7 +38,7 @@ const Header = () => {
 
   return (
     <div className={classes.grow}>
-      <AppBar position='static' color='primary'>
+      <AppBar position='static' color='primary' enableColorOnDark>
         <Toolbar>
           <IconButton aria-label='search' className={classes.iconWrapper} component={Link} to='/'>
             <CreditCard color='secondary' />

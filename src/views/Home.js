@@ -1,19 +1,18 @@
 /* global FileReader */
 import React, { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
 
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import CircularProgress from '@mui/material/CircularProgress'
 
 import FileInput from '../components/File/File'
+import Analyze from '../components/Analyze/Analyze'
 
 import useAppData from '../hooks/useAppData/useAppData'
 import strings from '../common/strings'
 import { csvToArray } from '../common/csv'
 
 const Home = () => {
-  const navigate = useNavigate()
   const [isLoading, setIsLoading] = useState(false)
   const { setTransactions } = useAppData()
 
@@ -26,7 +25,6 @@ const Home = () => {
       const strData = e.target.result
       const data = csvToArray(strData)
       setTransactions(data)
-      navigate('/analyze')
       setIsLoading(false)
     }
     reader.readAsText(file)
@@ -43,7 +41,7 @@ const Home = () => {
         </FileInput>
         {isLoading && <CircularProgress />}
       </Box>
-
+      <Analyze />
     </Box>
   )
 }
