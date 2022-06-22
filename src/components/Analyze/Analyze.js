@@ -2,8 +2,8 @@ import React from 'react'
 
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
-import ButtonBase from '@mui/material/ButtonBase'
 
+import CategoryList from '../CategoryList/CategoryList'
 import Expandable from '../Expandable/Expandable'
 import Chart from '../Charts/Pie'
 import TransactionTable from '../TransactionTable/TransactionTable'
@@ -12,7 +12,6 @@ import TransformInput from '../Transforms/Input'
 
 import useAppData from '../../hooks/useAppData/useAppData'
 import useMobile from '../../hooks/useMobile/useMobile'
-import useEventBus from '../../hooks/useEventBus/useEventBus'
 
 import strings from '../../common/strings'
 import { group, sum, formatCurrency } from '../../common/utils'
@@ -20,15 +19,8 @@ import { group, sum, formatCurrency } from '../../common/utils'
 const Analyze = () => {
   const { data, filters, setFilters, transforms, setTransforms } = useAppData()
   const { isMobile } = useMobile()
-  const bus = useEventBus()
   const categoryData = group(data).filter(cat => cat.value > 0)
   window.transactions = data
-
-  const handleCopy = val => {
-    navigator.clipboard && navigator.clipboard.writeText(val)
-    bus.emit('show-notification', { content: 'Copied value!' })
-  }
-  const handleCopyFunc = val => () => handleCopy(val)
 
   const onFiltersChange = filters => {
     setFilters && setFilters(filters)
@@ -51,14 +43,7 @@ const Analyze = () => {
       </Box>
       <Box m={{ sm: 0, md: 2 }} display='flex' flexDirection={isMobile ? 'column' : 'row'}>
         <Chart data={categoryData} xlabel='Category' ylabel='Amount' />
-        <div style={{ textAlign: 'left' }}>
-          {(categoryData || []).map(cat => (
-            <div key={cat.id}>
-              <span>{cat.id}: </span>
-              <ButtonBase onClick={handleCopyFunc(cat.value)}>{formatCurrency(cat.value)}</ButtonBase>
-            </div>
-          ))}
-        </div>
+        <CategoryList data={categoryData} />
       </Box>
       <br />
       <Expandable title='Transactions'>
