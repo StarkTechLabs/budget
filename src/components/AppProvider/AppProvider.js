@@ -1,7 +1,7 @@
 /* global localStorage */
 import React, { createContext, useState, useEffect } from 'react'
 
-import { processFilters } from '../../common/filter'
+import { processFilters, processTransforms } from '../../common/match'
 
 export const AppContext = createContext(null)
 
@@ -50,7 +50,9 @@ const AppProvider = ({ children }) => {
   }
 
   const process = () => {
-    const results = transactions.filter(processFilters(filters))
+    const results = transactions
+      .filter(processFilters(filters))
+      .map(processTransforms(transforms))
     setData(results)
   }
 

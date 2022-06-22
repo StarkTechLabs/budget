@@ -8,6 +8,7 @@ import Expandable from '../Expandable/Expandable'
 import Chart from '../Charts/Pie'
 import TransactionTable from '../TransactionTable/TransactionTable'
 import FilterInput from '../Filters/Input'
+import TransformInput from '../Transforms/Input'
 
 import useAppData from '../../hooks/useAppData/useAppData'
 import useMobile from '../../hooks/useMobile/useMobile'
@@ -17,7 +18,7 @@ import strings from '../../common/strings'
 import { group, sum, formatCurrency } from '../../common/utils'
 
 const Analyze = () => {
-  const { data, filters, setFilters } = useAppData()
+  const { data, filters, setFilters, transforms, setTransforms } = useAppData()
   const { isMobile } = useMobile()
   const bus = useEventBus()
   const categoryData = group(data).filter(cat => cat.value > 0)
@@ -31,6 +32,10 @@ const Analyze = () => {
 
   const onFiltersChange = filters => {
     setFilters && setFilters(filters)
+  }
+
+  const onTransformsChange = transforms => {
+    setTransforms && setTransforms(transforms)
   }
 
   if (!data) {
@@ -61,9 +66,14 @@ const Analyze = () => {
       </Expandable>
       <Expandable title='Filters'>
         <FilterInput
-          label=''
           values={filters}
           onChange={onFiltersChange}
+        />
+      </Expandable>
+      <Expandable title='Transforms'>
+        <TransformInput
+          values={transforms}
+          onChange={onTransformsChange}
         />
       </Expandable>
     </Box>

@@ -27,10 +27,12 @@ export const schema = Yup.object().shape({
   id: Yup.string().required(),
   field: Yup.string().required(),
   operation: Yup.string().required(),
-  term: Yup.string().required()
+  term: Yup.string().required(),
+  replaceField: Yup.string().required(),
+  replaceTerm: Yup.string().required()
 })
 
-const FilterControl = ({ value, onRemove, onEdit }) => (
+const TransformControl = ({ value, onRemove, onEdit }) => (
   <Box mt={1} mb={1}>
     <Display {...value} />
     <br />
@@ -58,10 +60,12 @@ const operationOpts = [
   { value: 'does not equal' }
 ]
 
-const FilterInputDialog = ({ open, value, onSubmit, onClose }) => {
+const TransformInputDialog = ({ open, value, onSubmit, onClose }) => {
   const [field, setField] = useState('')
   const [operation, setOperation] = useState('')
   const [term, setTerm] = useState('')
+  const [replaceField, setReplaceField] = useState('')
+  const [replaceTerm, setReplaceTerm] = useState('')
 
   const [validationError, setValidationError] = useState()
 
@@ -70,6 +74,8 @@ const FilterInputDialog = ({ open, value, onSubmit, onClose }) => {
       setField(value.field)
       setOperation(value.operation)
       setTerm(value.term)
+      setReplaceField(value.replaceField)
+      setReplaceTerm(value.replaceTerm)
     }
   }, [value])
 
@@ -77,6 +83,8 @@ const FilterInputDialog = ({ open, value, onSubmit, onClose }) => {
     setField('')
     setOperation('')
     setTerm('')
+    setReplaceField('')
+    setReplaceTerm('')
   }
 
   const handleClose = () => {
@@ -91,7 +99,9 @@ const FilterInputDialog = ({ open, value, onSubmit, onClose }) => {
       id: value ? value.id : generateId('f-'),
       field,
       operation,
-      term: term.trim()
+      term: term.trim(),
+      replaceField,
+      replaceTerm: replaceTerm.trim()
     }
 
     let valid = false
@@ -156,6 +166,30 @@ const FilterInputDialog = ({ open, value, onSubmit, onClose }) => {
             onChange={e => setTerm(e.target.value)}
           />
         </Box>
+        <Divider />
+        <Box m={2}>
+          <Select
+            label='Replace Field'
+            name='replaceField'
+            value={replaceField}
+            options={fieldOpts}
+            error={isError('replaceField')}
+            helperText={isError('replaceField') && findError('replaceField')}
+            onChange={e => setReplaceField(e.target.value)}
+          />
+        </Box>
+        <Box m={2}>
+          <TextField
+            label='Replace Value'
+            name='replaceTerm'
+            type='text'
+            value={replaceTerm}
+            fullWidth
+            error={isError('replaceTerm')}
+            helperText={isError('replaceTerm') && findError('replaceTerm')}
+            onChange={e => setReplaceTerm(e.target.value)}
+          />
+        </Box>
         {validationError && <ErrorView error={validationError} />}
       </DialogContent>
       <DialogActions>
@@ -169,27 +203,27 @@ const Input = ({ label = '', values, onChange }) => {
   const [dialogOpen, setDialogOpen] = useState(false)
   const [selected, setSelected] = useState()
 
-  const handleRemove = filter => {
+  const handleRemove = transform => {
     if (values && Array.isArray(values)) {
-      const result = values.filter(v => v.id !== filter.id)
+      const result = values.filter(v => v.id !== transform.id)
       onChange && onChange(result)
     } else {
       onChange && onChange([])
     }
   }
 
-  const handleEdit = filter => {
-    setSelected(filter)
+  const handleEdit = transform => {
+    setSelected(transform)
     setDialogOpen(true)
   }
 
-  const handleSubmit = filter => {
+  const handleSubmit = transform => {
     if (values && Array.isArray(values)) {
-      const result = values.filter(v => v.id !== filter.id)
-      result.push(filter)
+      const result = values.filter(v => v.id !== transform.id)
+      result.push(transform)
       onChange && onChange(result)
     } else {
-      onChange && onChange([filter])
+      onChange && onChange([transform])
     }
   }
 
@@ -197,11 +231,11 @@ const Input = ({ label = '', values, onChange }) => {
     <>
       {label && <Typography variant='subtitle1'>{label}</Typography>}
       {Array.isArray(values) && values.map(v => (
-        <FilterControl key={`filter-${v && v.id}`} value={v} onRemove={handleRemove} onEdit={handleEdit} />
+        <TransformControl key={`transform-${v && v.id}`} value={v} onRemove={handleRemove} onEdit={handleEdit} />
       ))}
 
       <Button variant='text' startIcon={<AddIcon />} onClick={() => setDialogOpen(true)}>Add</Button>
-      <FilterInputDialog open={dialogOpen} value={selected} onSubmit={handleSubmit} onClose={() => setDialogOpen(false)} />
+      <TransformInputDialog open={dialogOpen} value={selected} onSubmit={handleSubmit} onClose={() => setDialogOpen(false)} />
     </>
   )
 }
