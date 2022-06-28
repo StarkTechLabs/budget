@@ -130,7 +130,7 @@ const TransformInputDialog = ({ open, value, onSubmit, onClose }) => {
 
   return (
     <Dialog open={open} onClose={handleClose} fullWidth>
-      <DialogTitle>New Location</DialogTitle>
+      <DialogTitle>New Transform</DialogTitle>
       <DialogContent>
         <Box m={2}>
           <Select

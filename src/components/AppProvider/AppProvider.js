@@ -62,6 +62,15 @@ const AppProvider = ({ children }) => {
     }
   }, [filters, transactions, transforms])
 
+  window.appData = {
+    settings,
+    data,
+    transactions,
+    budget,
+    filters,
+    transforms
+  }
+
   return (
     <AppContext.Provider value={{
       settings,

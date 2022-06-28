@@ -20,9 +20,15 @@ const CategoryList = ({ data }) => {
   }
   const handleCopyFunc = val => () => handleCopy(val)
 
+  const sortDescByValue = (a, b) => {
+    if (b.value < a.value) return -1
+    else if (b.value > a.value) return 1
+    else return 0
+  }
+
   return (
     <List>
-      {data.map(item => (
+      {data.sort(sortDescByValue).map(item => (
         <ListItem key={item.id} disablePadding>
           <ListItemButton onClick={handleCopyFunc(item.value)}>
             <ListItemText primary={`${item.id}: ${formatCurrency(item.value)}`} />

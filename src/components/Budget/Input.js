@@ -18,19 +18,17 @@ import DeleteIcon from '@mui/icons-material/Delete'
 import EditIcon from '@mui/icons-material/Edit'
 
 import ErrorView from '../ErrorView/ErrorView'
-import Select from '../Select/Select'
 
 import Display from './Display'
 import { generateId } from '../../common/utils'
 
 export const schema = Yup.object().shape({
   id: Yup.string().required(),
-  field: Yup.string().required(),
-  operation: Yup.string().required(),
-  term: Yup.string().required()
+  category: Yup.string().required(),
+  amount: Yup.number().required()
 })
 
-const FilterControl = ({ value, onRemove, onEdit }) => (
+const BudgetControl = ({ value, onRemove, onEdit }) => (
   <Box mt={1} mb={1}>
     <Display {...value} />
     <br />
@@ -40,43 +38,22 @@ const FilterControl = ({ value, onRemove, onEdit }) => (
   </Box>
 )
 
-const fieldOpts = [
-  { value: 'transactionDate' },
-  { value: 'clearingDate' },
-  { value: 'description' },
-  { value: 'merchant' },
-  { value: 'category' },
-  { value: 'type' },
-  { value: 'purchaseBy' },
-  { value: 'amount' }
-]
-
-const operationOpts = [
-  { value: 'contains' },
-  { value: 'equals' },
-  { value: 'does not contain' },
-  { value: 'does not equal' }
-]
-
-const FilterInputDialog = ({ open, value, onSubmit, onClose }) => {
-  const [field, setField] = useState('')
-  const [operation, setOperation] = useState('')
-  const [term, setTerm] = useState('')
+const BudgetInputDialog = ({ open, value, onSubmit, onClose }) => {
+  const [category, setCategory] = useState('')
+  const [amount, setAmount] = useState(0)
 
   const [validationError, setValidationError] = useState()
 
   useEffect(() => {
     if (value) {
-      setField(value.field)
-      setOperation(value.operation)
-      setTerm(value.term)
+      setCategory(value.category)
+      setAmount(value.amount)
     }
   }, [value])
 
   const clear = () => {
-    setField('')
-    setOperation('')
-    setTerm('')
+    setCategory('')
+    setAmount(0)
   }
 
   const handleClose = () => {
@@ -88,10 +65,9 @@ const FilterInputDialog = ({ open, value, onSubmit, onClose }) => {
     setValidationError(null)
 
     const data = {
-      id: value ? value.id : generateId('f-'),
-      field,
-      operation,
-      term: term.trim()
+      id: value ? value.id : generateId('b-'),
+      category: category.trim(),
+      amount
     }
 
     let valid = false
@@ -120,40 +96,30 @@ const FilterInputDialog = ({ open, value, onSubmit, onClose }) => {
 
   return (
     <Dialog open={open} onClose={handleClose} fullWidth>
-      <DialogTitle>New Filter</DialogTitle>
+      <DialogTitle>New Budget Item</DialogTitle>
       <DialogContent>
         <Box m={2}>
-          <Select
-            label='Field'
-            name='field'
-            value={field}
-            options={fieldOpts}
-            error={isError('field')}
-            helperText={isError('field') && findError('field')}
-            onChange={e => setField(e.target.value)}
-          />
-        </Box>
-        <Box m={2}>
-          <Select
-            label='Operation'
-            name='numOfClinicians'
-            value={operation}
-            options={operationOpts}
-            error={isError('operation')}
-            helperText={isError('operation') && findError('operation')}
-            onChange={e => setOperation(e.target.value)}
+          <TextField
+            label='Category'
+            name='category'
+            type='text'
+            value={category}
+            fullWidth
+            error={isError('category')}
+            helperText={isError('category') && findError('category')}
+            onChange={e => setCategory(e.target.value)}
           />
         </Box>
         <Box m={2}>
           <TextField
-            label='Value'
-            name='term'
-            type='text'
-            value={term}
+            label='Amount'
+            name='amount'
+            type='number'
+            value={amount}
             fullWidth
-            error={isError('term')}
-            helperText={isError('term') && findError('term')}
-            onChange={e => setTerm(e.target.value)}
+            error={isError('amount')}
+            helperText={isError('amount') && findError('amount')}
+            onChange={e => setAmount(e.target.value)}
           />
         </Box>
         {validationError && <ErrorView error={validationError} />}
@@ -169,27 +135,27 @@ const Input = ({ label = '', values, onChange }) => {
   const [dialogOpen, setDialogOpen] = useState(false)
   const [selected, setSelected] = useState()
 
-  const handleRemove = filter => {
+  const handleRemove = item => {
     if (values && Array.isArray(values)) {
-      const result = values.filter(v => v.id !== filter.id)
+      const result = values.filter(v => v.id !== item.id)
       onChange && onChange(result)
     } else {
       onChange && onChange([])
     }
   }
 
-  const handleEdit = filter => {
-    setSelected(filter)
+  const handleEdit = item => {
+    setSelected(item)
     setDialogOpen(true)
   }
 
-  const handleSubmit = filter => {
+  const handleSubmit = item => {
     if (values && Array.isArray(values)) {
-      const result = values.filter(v => v.id !== filter.id)
-      result.push(filter)
+      const result = values.filter(v => v.id !== item.id)
+      result.push(item)
       onChange && onChange(result)
     } else {
-      onChange && onChange([filter])
+      onChange && onChange([item])
     }
   }
 
@@ -197,11 +163,11 @@ const Input = ({ label = '', values, onChange }) => {
     <>
       {label && <Typography variant='subtitle1'>{label}</Typography>}
       {Array.isArray(values) && values.map(v => (
-        <FilterControl key={`filter-${v && v.id}`} value={v} onRemove={handleRemove} onEdit={handleEdit} />
+        <BudgetControl key={`budget-item-${v && v.id}`} value={v} onRemove={handleRemove} onEdit={handleEdit} />
       ))}
 
       <Button variant='text' startIcon={<AddIcon />} onClick={() => setDialogOpen(true)}>Add</Button>
-      <FilterInputDialog open={dialogOpen} value={selected} onSubmit={handleSubmit} onClose={() => setDialogOpen(false)} />
+      <BudgetInputDialog open={dialogOpen} value={selected} onSubmit={handleSubmit} onClose={() => setDialogOpen(false)} />
     </>
   )
 }

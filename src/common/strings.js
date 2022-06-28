@@ -5,6 +5,15 @@ export default {
     title: 'Something went wrong.'
   },
   analyze: {
-    title: 'Analyze'
+    title: 'Analyze',
+    spending: {
+      title: 'Spending'
+    },
+    budget: {
+      title: 'Budget'
+    },
+    settings: {
+      title: 'Settings'
+    }
   }
 }
