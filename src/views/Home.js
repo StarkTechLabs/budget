@@ -14,7 +14,7 @@ import { csvToArray } from '../common/csv'
 
 const Home = () => {
   const [isLoading, setIsLoading] = useState(false)
-  const { setTransactions } = useAppData()
+  const { transactions, setTransactions } = useAppData()
 
   const onFileChange = (files) => {
     setIsLoading(true)
@@ -42,7 +42,7 @@ const Home = () => {
         </FileInput>
         {isLoading && <CircularProgress />}
       </Box>
-      <Analyze />
+      {transactions && transactions.length > 0 && <Analyze />}
     </Box>
   )
 }
