@@ -7,6 +7,7 @@ import CircularProgress from '@mui/material/CircularProgress'
 
 import FileInput from '../components/File/File'
 import Analyze from '../components/Analyze/Analyze'
+import ManageData from '../components/ManageData/ManageData'
 
 import useAppData from '../hooks/useAppData/useAppData'
 import strings from '../common/strings'
@@ -34,6 +35,7 @@ const Home = () => {
     <Box m={{ sx: 2, sm: 3 }}>
       <br />
       <Typography variant='h3' component='h1'>{strings.title}</Typography>
+      {transactions && transactions.length > 0 && <ManageData />}
       <Box m={3} display='flex' flexDirection='column' alignItems='center' justifyContent='center'>
         <Typography variant='subtitle1'>{strings.uploadCopy}</Typography>
         <br />
