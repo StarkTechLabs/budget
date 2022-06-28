@@ -64,7 +64,7 @@ const Row = ({ row, transactions }) => {
                       <TableCell>Date</TableCell>
                       <TableCell>Merchant</TableCell>
                       <TableCell>Purchased By</TableCell>
-                      <TableCell align='right'>Amount ($)</TableCell>
+                      <TableCell align='right'>Amount (USD)</TableCell>
                     </TableRow>
                   </TableHead>
                   <TableBody>
@@ -103,7 +103,7 @@ const Compare = ({ data, transactions }) => {
           <TableRow>
             <TableCell sx={{ width: 50 }} />
             <TableCell sx={{ fontWeight: 'bold' }}>Category</TableCell>
-            <TableCell align='right' sx={{ fontWeight: 'bold' }}>Amount ($)</TableCell>
+            <TableCell align='right' sx={{ fontWeight: 'bold' }}>Amount (USD)</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
