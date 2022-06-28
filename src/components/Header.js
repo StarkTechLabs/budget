@@ -8,6 +8,7 @@ import IconButton from '@mui/material/IconButton'
 
 import makeStyles from '@mui/styles/makeStyles'
 import CreditCard from '@mui/icons-material/CreditCard'
+import GitHubIcon from '@mui/icons-material/GitHub'
 
 import strings from '../common/strings'
 
@@ -50,7 +51,9 @@ const Header = () => {
           >
             {strings.title}
           </Typography>
-
+          <IconButton aria-label='github' className={classes.iconWrapper} href='https://github.com/StarkTechLabs/budget'>
+            <GitHubIcon color='secondary' />
+          </IconButton>
         </Toolbar>
       </AppBar>
     </div>

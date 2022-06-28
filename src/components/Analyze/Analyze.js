@@ -24,6 +24,12 @@ import strings from '../../common/strings'
 import { group, sum, formatCurrency } from '../../common/utils'
 
 const Analyze = () => {
+  const { data } = useAppData()
+
+  if (!data) {
+    return null
+  }
+
   return (
     <Box m={{ xs: 0, sm: 1 }}>
       <Typography variant='h3' component='h2' mt={2} mb={2}>{strings.analyze.title}</Typography>

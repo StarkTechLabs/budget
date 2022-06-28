@@ -1,11 +1,11 @@
 {
-  "name": "apple-card-budget",
+  "name": "budget",
   "version": "0.1.1",
-  "description": "Apple Card Budget",
+  "description": "Budget",
   "main": "src/index.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/StarkTechLabs/apple-card-budget"
+    "url": "https://github.com/StarkTechLabs/budget"
   },
   "author": "mstark5652",
   "license": "SEE LICENSE IN LICENSE.md",
