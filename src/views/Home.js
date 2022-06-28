@@ -31,7 +31,8 @@ const Home = () => {
   }
 
   return (
-    <Box m={3}>
+    <Box m={{ sx: 2, sm: 3 }}>
+      <br />
       <Typography variant='h3' component='h1'>{strings.title}</Typography>
       <Box m={3} display='flex' flexDirection='column' alignItems='center' justifyContent='center'>
         <Typography variant='subtitle1'>{strings.uploadCopy}</Typography>

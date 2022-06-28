@@ -8,7 +8,7 @@ const HEADER_MAP = {
   Merchant: 'merchant',
   Category: 'category',
   Type: 'type',
-  'Amount (USD)': 'amount',
+  'Amount ($)': 'amount',
   'Purchased By': 'purchaseBy'
 }
 

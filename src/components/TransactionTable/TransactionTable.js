@@ -45,7 +45,7 @@ const TransactionTable = ({ transactions, defaultPageSize = 5 }) => {
     },
     {
       field: 'amount',
-      headerName: 'Amount (USD)',
+      headerName: 'Amount ($)',
       flex: 0.3
     }
   ]

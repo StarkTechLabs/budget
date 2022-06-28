@@ -25,7 +25,7 @@ import { group, sum, formatCurrency } from '../../common/utils'
 
 const Analyze = () => {
   return (
-    <Box m={1}>
+    <Box m={{ xs: 0, sm: 1 }}>
       <Typography variant='h3' component='h2' mt={2} mb={2}>{strings.analyze.title}</Typography>
       <Divider sx={{ margin: 1 }} />
       <Box>
@@ -120,14 +120,15 @@ const Settings = () => {
   )
 }
 
-const findBudgetLimit = (budget, cat) => {
-  const result = (budget || []).find(budget => budget.category === cat.id)
-  return (result && +result.amount) ? +result.amount : 0
+const findSpend = (categoryData, category) => {
+  const result = (categoryData || []).find(cat => cat.id === category)
+  return (result && +result.value) ? +result.value : 0
 }
 
 const Budget = () => {
   const { data, budget } = useAppData()
-  const categoryData = group(data).filter(cat => cat.value > 0).map(cat => ({ ...cat, limit: findBudgetLimit(budget, cat) }))
+  const categoryData = group(data).filter(cat => cat.value > 0)
+  const budgetData = budget.map(bud => ({ ...bud, spend: findSpend(categoryData, bud.category) }))
 
   if (!data) {
     return null
@@ -137,7 +138,7 @@ const Budget = () => {
 
   return (
     <>
-      <BudgetCompare data={categoryData} />
+      <BudgetCompare transactions={data} data={budgetData} />
     </>
   )
 }
