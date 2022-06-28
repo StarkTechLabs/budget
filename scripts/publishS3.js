@@ -63,7 +63,6 @@ if (process.argv[2] === 'upload') {
   // always upload style files to s3
   const files = walkSync('./build')
   files.push('index.html')
-  files.push('event.html')
   files.push('favicon.ico')
   files.forEach(file => {
     // console.log("File: ", path.basename(file))
