@@ -15,23 +15,23 @@ import TableRow from '@mui/material/TableRow'
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp'
 
-import { formatCurrency } from '../../common/utils'
+import { formatCurrency, sum } from '../../common/utils'
+
+const formatValue = ({ amount, spend }) => {
+  const val = amount - spend
+  if (val === 0) {
+    return <span>{formatCurrency(val)}</span>
+  }
+
+  if (val < 0) {
+    return <span style={{ color: 'red' }}>{formatCurrency(val)}</span>
+  }
+
+  return <span style={{ color: 'green' }}>+{formatCurrency(val)}</span>
+}
 
 const Row = ({ row, transactions }) => {
   const [open, setOpen] = useState(false)
-
-  const formatValue = item => {
-    const amount = item.amount - item.spend
-    if (amount === 0) {
-      return <span>{formatCurrency(amount)}</span>
-    }
-
-    if (amount < 0) {
-      return <span style={{ color: 'red' }}>{formatCurrency(amount)}</span>
-    }
-
-    return <span style={{ color: 'green' }}>+{formatCurrency(amount)}</span>
-  }
 
   return (
     <>
@@ -89,30 +89,35 @@ const Row = ({ row, transactions }) => {
   )
 }
 
-const Compare = ({ data, transactions }) => {
+const Compare = ({ data, transactions, total }) => {
   const sortDescByValue = (a, b) => {
     if (b.value < a.value) return -1
     else if (b.value > a.value) return 1
     else return 0
   }
+  const budgetTotal = sum(data)
 
   return (
-    <TableContainer component={Paper}>
-      <Table aria-label='budget collapsible table'>
-        <TableHead sx={{ backgroundColor: '#2fabb4' }}>
-          <TableRow>
-            <TableCell sx={{ width: 50 }} />
-            <TableCell sx={{ fontWeight: 'bold' }}>Category</TableCell>
-            <TableCell align='right' sx={{ fontWeight: 'bold' }}>Amount (USD)</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {data.sort(sortDescByValue).map(item => (
-            <Row key={item.category} row={item} transactions={transactions.filter(t => t.category === item.category)} />
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
+    <>
+      <Typography variant='subtitle1'>Resulting: {formatValue({ amount: budgetTotal, spend: total })}</Typography>
+      <br />
+      <TableContainer component={Paper}>
+        <Table aria-label='budget collapsible table'>
+          <TableHead sx={{ backgroundColor: '#2fabb4' }}>
+            <TableRow>
+              <TableCell sx={{ width: 50 }} />
+              <TableCell sx={{ fontWeight: 'bold' }}>Category</TableCell>
+              <TableCell align='right' sx={{ fontWeight: 'bold' }}>Amount (USD)</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {data.sort(sortDescByValue).map(item => (
+              <Row key={item.category} row={item} transactions={transactions.filter(t => t.category === item.category)} />
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </>
   )
 }
 

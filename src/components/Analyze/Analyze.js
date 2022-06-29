@@ -125,6 +125,7 @@ const findSpend = (categoryData, category) => {
 
 const Budget = () => {
   const { data, budget } = useAppData()
+  const total = sum(data)
   const categoryData = group(data).filter(cat => cat.value > 0)
   const budgetData = budget.map(bud => ({ ...bud, spend: findSpend(categoryData, bud.category) }))
 
@@ -136,7 +137,7 @@ const Budget = () => {
 
   return (
     <>
-      <BudgetCompare transactions={data} data={budgetData} />
+      <BudgetCompare transactions={data} data={budgetData} total={total} />
     </>
   )
 }
