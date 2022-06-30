@@ -39,7 +39,7 @@ const TransactionTable = ({ transactions, defaultPageSize = 5 }) => {
       flex: 0.3
     },
     {
-      field: 'purchaseBy',
+      field: 'purchasedBy',
       headerName: 'Purchased By',
       flex: 0.3
     },
@@ -71,7 +71,7 @@ const TransactionTable = ({ transactions, defaultPageSize = 5 }) => {
             merchant: true,
             category: !isMobile,
             type: !isMobile,
-            purchaseBy: false,
+            purchasedBy: false,
             amount: true
           }
         }

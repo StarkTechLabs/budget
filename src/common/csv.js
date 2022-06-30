@@ -9,7 +9,7 @@ const HEADER_MAP = {
   Category: 'category',
   Type: 'type',
   'Amount (USD)': 'amount',
-  'Purchased By': 'purchaseBy'
+  'Purchased By': 'purchasedBy'
 }
 
 const mapHeader = val => {

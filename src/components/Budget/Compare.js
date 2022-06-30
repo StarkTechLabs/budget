@@ -74,7 +74,7 @@ const Row = ({ row, transactions }) => {
                           {transaction.transactionDate}
                         </TableCell>
                         <TableCell>{transaction.merchant}</TableCell>
-                        <TableCell>{transaction.purchaseBy}</TableCell>
+                        <TableCell>{transaction.purchasedBy}</TableCell>
                         <TableCell align='right'>{formatCurrency(transaction.amount)}</TableCell>
                       </TableRow>
                     ))}
