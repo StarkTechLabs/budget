@@ -7,9 +7,11 @@ import DialogTitle from '@mui/material/DialogTitle'
 import DialogContent from '@mui/material/DialogContent'
 
 import useAppData from '../../hooks/useAppData/useAppData'
+import useEventBus from '../../hooks/useEventBus/useEventBus'
 
 const ManageData = () => {
   const { setTransactions, setBudget, setFilters, setTransforms } = useAppData()
+  const bus = useEventBus()
   const [open, setOpen] = useState(false)
 
   const handleClose = () => {
@@ -25,7 +27,12 @@ const ManageData = () => {
       </Box>
       <Dialog open={open} onClose={handleClose} fullWidth>
         <DialogTitle>Manage Data</DialogTitle>
-        <DialogContent sx={{ display: 'flex', flexDirection: 'column' }}>
+        <DialogContent sx={{ display: 'flex', flexDirection: 'column', alignItems: 'space-evenly' }}>
+          <Button variant='outlined' onClick={() => bus.emit('show-add-transaction-modal')} color='primary'>
+            Add Transaction
+          </Button>
+
+          <br />
           <Button variant='outlined' onClick={() => setTransactions([])} color='error'>
             Clear Transactions
           </Button>

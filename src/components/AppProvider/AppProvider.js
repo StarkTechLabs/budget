@@ -64,11 +64,16 @@ const AppProvider = ({ children }) => {
 
   window.appData = {
     settings,
+    setSettings,
     data,
     transactions,
+    setTransactions: handleTransactions,
     budget,
+    setBudget: handleBudget,
     filters,
-    transforms
+    setFilters: handleFilters,
+    transforms,
+    setTransforms: handleTransforms
   }
 
   return (

@@ -8,6 +8,7 @@ import CircularProgress from '@mui/material/CircularProgress'
 import FileInput from '../components/File/File'
 import Analyze from '../components/Analyze/Analyze'
 import ManageData from '../components/ManageData/ManageData'
+import AddTransactionDialog from '../components/Transaction/AddDialog'
 
 import useAppData from '../hooks/useAppData/useAppData'
 import strings from '../common/strings'
@@ -45,6 +46,7 @@ const Home = () => {
         {isLoading && <CircularProgress />}
       </Box>
       {transactions && transactions.length > 0 && <Analyze />}
+      <AddTransactionDialog />
     </Box>
   )
 }

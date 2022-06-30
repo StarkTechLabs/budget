@@ -47,7 +47,7 @@ const fieldOpts = [
   { value: 'merchant' },
   { value: 'category' },
   { value: 'type' },
-  { value: 'purchaseBy' },
+  { value: 'purchasedBy' },
   { value: 'amount' }
 ]
 
