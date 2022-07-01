@@ -1,6 +1,6 @@
 {
   "name": "budget",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Budget",
   "main": "src/index.js",
   "repository": {
@@ -54,12 +54,12 @@
     "yup": "^0.32.11"
   },
   "jest": {
-      "testEnvironment": "jsdom",
-      "moduleNameMapper": {
-          "^.+\\.(css|less|scss)$": "babel-jest"
-      },
-      "setupFilesAfterEnv": [
-          "./src/setupTests.js"
-      ]
+    "testEnvironment": "jsdom",
+    "moduleNameMapper": {
+      "^.+\\.(css|less|scss)$": "babel-jest"
+    },
+    "setupFilesAfterEnv": [
+      "./src/setupTests.js"
+    ]
   }
 }
