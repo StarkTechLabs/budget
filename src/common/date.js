@@ -8,8 +8,8 @@ export const parseDate = date => {
   return dayjs(date, 'MMM YYYY').toString()
 }
 
-export const findDateOpts = () => {
-  const dates = range(dayjs(), 7, 'month', false) // [dayjs(), dayjs().subtract(1, 'month'), dayjs().subtract(2, 'month')]
+export const findDateOpts = (depth = 7) => {
+  const dates = range(dayjs(), depth, 'month', false) // [dayjs(), dayjs().subtract(1, 'month'), dayjs().subtract(2, 'month')]
   return dates.map(date => ({
     key: formatDate(date),
     value: formatDate(date)
