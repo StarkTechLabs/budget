@@ -26,7 +26,7 @@ const Home = () => {
     reader.onload = e => {
       const strData = e.target.result
       const data = csvToArray(strData)
-      setTransactions(data)
+      setTransactions([...transactions, ...data])
       setIsLoading(false)
     }
     reader.readAsText(file)
@@ -38,7 +38,7 @@ const Home = () => {
       <Typography variant='h3' component='h1'>{strings.title}</Typography>
       {transactions && transactions.length > 0 && <ManageData />}
       <Box m={3} display='flex' flexDirection='column' alignItems='center' justifyContent='center'>
-        <Typography variant='subtitle1'>{strings.uploadCopy}</Typography>
+        <Typography variant='subtitle1'>{strings.importCopy}</Typography>
         <br />
         <FileInput onFileChange={onFileChange} accept='application/csv'>
           {isLoading ? 'processing..' : 'select file'}

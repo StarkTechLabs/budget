@@ -1,3 +1,6 @@
+import dayjs from 'dayjs'
+
+import { inRange } from './date'
 
 const match = (filter, item) => {
   switch (filter.operation) {
@@ -18,6 +21,18 @@ const transform = (tf, item) => {
   return {
     ...item,
     [tf.replaceField]: tf.replaceTerm
+  }
+}
+
+export const processForDate = date => {
+  const min = dayjs(date).startOf('month')
+  const max = dayjs(date).endOf('month')
+
+  return item => {
+    if (inRange(min, max, dayjs(item.transactionDate))) {
+      return true
+    }
+    return false
   }
 }
 

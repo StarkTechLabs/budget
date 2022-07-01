@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 
 import Button from '@mui/material/Button'
 import Typography from '@mui/material/Typography'
-import FileUploadIcon from '@mui/icons-material/FileUpload'
+import AttachFileIcon from '@mui/icons-material/AttachFile'
 
 function FileInput ({ children, onFileChange, accept, multiple = false, ...others }) {
   const [files, setFiles] = useState()
@@ -21,7 +21,7 @@ function FileInput ({ children, onFileChange, accept, multiple = false, ...other
         <Button
           variant='outlined'
           component='span'
-          endIcon={<FileUploadIcon color='primary' />}
+          endIcon={<AttachFileIcon color='primary' />}
           {...others}
         >
           {children}

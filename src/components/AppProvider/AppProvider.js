@@ -1,7 +1,7 @@
 /* global localStorage */
 import React, { createContext, useState, useEffect } from 'react'
 
-import { processFilters, processTransforms } from '../../common/match'
+import { processFilters, processTransforms, processForDate } from '../../common/match'
 
 export const AppContext = createContext(null)
 
@@ -18,7 +18,8 @@ const storageKeys = {
   transaction: 'transaction-data',
   budget: 'budget-data',
   filters: 'filters-data',
-  transforms: 'transforms-data'
+  transforms: 'transforms-data',
+  date: 'date-selector'
 }
 
 const AppProvider = ({ children }) => {
@@ -28,6 +29,7 @@ const AppProvider = ({ children }) => {
   const [budget, setBudget] = useState(parseLocalItem(storageKeys.budget, {}))
   const [filters, setFilters] = useState(parseLocalItem(storageKeys.filters, {}))
   const [transforms, setTransforms] = useState(parseLocalItem(storageKeys.transforms, {}))
+  const [date, setDate] = useState(localStorage.getItem(storageKeys.date) || '')
 
   const handleTransactions = data => {
     setTransactions(data)
@@ -49,9 +51,15 @@ const AppProvider = ({ children }) => {
     localStorage.setItem(storageKeys.transforms, JSON.stringify(data))
   }
 
+  const handleDate = date => {
+    setDate(date)
+    localStorage.setItem(storageKeys.date, date)
+  }
+
   const process = () => {
     const results = transactions
       .filter(processFilters(filters))
+      .filter(processForDate(date))
       .map(processTransforms(transforms))
     setData(results)
   }
@@ -60,7 +68,7 @@ const AppProvider = ({ children }) => {
     if (transactions) {
       process()
     }
-  }, [filters, transactions, transforms])
+  }, [filters, transactions, transforms, date])
 
   window.appData = {
     settings,
@@ -73,7 +81,9 @@ const AppProvider = ({ children }) => {
     filters,
     setFilters: handleFilters,
     transforms,
-    setTransforms: handleTransforms
+    setTransforms: handleTransforms,
+    date,
+    setDate: handleDate
   }
 
   return (
@@ -88,7 +98,9 @@ const AppProvider = ({ children }) => {
       filters,
       setFilters: handleFilters,
       transforms,
-      setTransforms: handleTransforms
+      setTransforms: handleTransforms,
+      date,
+      setDate: handleDate
     }}
     >
       {children}
