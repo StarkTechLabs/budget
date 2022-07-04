@@ -24,7 +24,7 @@
     "@babel/preset-react": "^7.17.12",
     "@testing-library/jest-dom": "^5.16.1",
     "@testing-library/react": "^12.1.2",
-    "@testing-library/react-hooks": "^7.0.2",
+    "@testing-library/react-hooks": "^8.0.1",
     "@testing-library/user-event": "^14.2.1",
     "aws-sdk": "^2.1049.0",
     "eslint-plugin-react-hooks": "^4.6.0",
