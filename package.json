@@ -32,7 +32,7 @@
     "jest-cli": "^28.1.1",
     "jest-environment-jsdom": "^28.1.1",
     "react-test-renderer": "^17.0.2",
-    "mime": "^2.6.0",
+    "mime": "^3.0.0",
     "rewp": "^0.6.1",
     "standard": "^17.0.0"
   },
